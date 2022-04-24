@@ -6,6 +6,8 @@ import LandingRoutes from '../pages/landing'
 import PrivateRoutes from './Private.routes'
 import PublicRoutes from './Public.routes'
 
+const NotFound = React.lazy(() => import("../pages/404"))
+
 const Router : React.FC =  () => {
   return (
     <React.Suspense  fallback = { <div> ... loading</div>}>
@@ -18,7 +20,7 @@ const Router : React.FC =  () => {
 
             </Route>
             
-            <Route path='/404' element = {<div>Not Found</div>}/>
+            <Route path='/404' element = {<NotFound/>}/>
         </Routes>
     </React.Suspense>
   )
