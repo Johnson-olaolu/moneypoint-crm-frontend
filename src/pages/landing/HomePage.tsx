@@ -22,7 +22,7 @@ const HomePage: React.FC = (): JSX.Element => {
           </div>
         </div>
 		<div className=" text-center mt-8">
-			<Link to ="/login" className=" text-white">Signup / Login as an Agent</Link>
+			<Link to ="auth/agent/login" className=" text-white">Login as an Agent</Link>
         </div>
       </div>
     </section>
