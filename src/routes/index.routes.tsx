@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes,  } from 'react-router-dom'
 import AuthRoutes from '../pages/auth'
 import LandingRoutes from '../pages/landing'
+import TicketRoutes from '../pages/ticket'
 
 import PrivateRoutes from './Private.routes'
 import PublicRoutes from './Public.routes'
@@ -13,13 +14,12 @@ const Router : React.FC =  () => {
     <React.Suspense  fallback = { <div> ... loading</div>}>
         <Routes>
             <Route  path='*' element = {<LandingRoutes/>}/>
-            <Route path = "auth" element = {<PublicRoutes/>}>
-                  <Route  path = "*" element = {<AuthRoutes/>}/>
+            <Route  element = {<PublicRoutes/>}>
+              <Route  path = "auth/*" element = {<AuthRoutes/>}/>
             </Route>
-            <Route path = "agent"  element = {<PrivateRoutes/>}>
-
-            </Route>
-            
+            <Route element ={<PrivateRoutes/>}>
+              <Route path='ticket/*' element = {<TicketRoutes/>} />
+            </Route>          
             <Route path='/404' element = {<NotFound/>}/>
         </Routes>
     </React.Suspense>

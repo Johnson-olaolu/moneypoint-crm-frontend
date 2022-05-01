@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import MCustomFormGroupFileUpload from "../../components/forms/FormGroup/MCustomFormGroupFileUpload";
 import MCustomFromGroupInput from "../../components/forms/FormGroup/MCustomFormGroupInput";
@@ -14,13 +15,20 @@ const customData = [
 ];
 
 const RegisterTicket = () => {
+  const queryClient = useQueryClient()
+
+  useEffect(() => {
+    
+  }, [])
+  
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     category: "",
     subCategory: "",
     email: "",
-    agentUsername: "",
+    agentEmail: "",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,16 +94,16 @@ const RegisterTicket = () => {
             isRequired={true}
             onChange={handleChange}
             placeholder="Enter Email Address"
-            value={formData.title}
+            value={formData.email}
             ref={inputRef}
             type="email"
           />
           <MCustomFromGroupInput
-            name="agentUsername"
+            name="agentEmail"
             isRequired={false}
             onChange={handleChange}
-            placeholder="Enter Agent Username"
-            value={formData.title}
+            placeholder="Enter Agent Email"
+            value={formData.agentEmail}
             ref={inputRef}
             type="text"
           />

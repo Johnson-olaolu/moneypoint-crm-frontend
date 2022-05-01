@@ -29,7 +29,7 @@ const AgentLogin = () => {
             errorMsg={errMsg}
             placeholder="Input UserName"
             onChange={handleChange}
-            label="Enter Issue ID here"
+            label="Enter Username"
             ref={inputRef}
             type="text"
           />
@@ -39,7 +39,7 @@ const AgentLogin = () => {
             errorMsg={errMsg}
             placeholder="Enter Password"
             onChange={handleChange}
-            label="Enter Issue ID here"
+            label="Enter Password"
             ref={inputRef}
             type="password"
           />
