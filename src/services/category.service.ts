@@ -1,6 +1,6 @@
 import axiosService from "./axios.service";
 
-const getCategories = () => {
+const getAllCategories = () => {
   return axiosService.get("/category")
   .then((res) => {
       return res.data
@@ -10,6 +10,17 @@ const getCategories = () => {
   })
 };
 
-export const categoriesService = {
-    getCategories
+const getAllFaq = () => {
+    return axiosService.get("/category/faq")
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err
+    })
+}
+
+export const categoryService = {
+    getAllCategories,
+    getAllFaq
 }

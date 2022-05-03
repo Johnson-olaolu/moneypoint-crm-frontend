@@ -1,8 +1,14 @@
 import React from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import MCustomAccordion from "../../components/accordion/MCustomAccordion";
+import { categoryService } from "../../services/category.service";
 
 const ViewFaq = () => {
+  const queryClient = useQueryClient()
+  const { data} = useQuery("categories", categoryService.getAllFaq)
+  console.log(data);
+
   return (
     <section className=" min-h-screen moneypoint-blue-gradient py-12 ">
       <div className=" rounded-sm bg-blue-100  text-center py-14 px-20 max-w-5xl mx-auto">
