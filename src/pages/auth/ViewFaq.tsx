@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import MCustomAccordion from "../../components/accordion/MCustomAccordion";
+import { ICategory } from "../../interfaces/category.interface";
 import { categoryService } from "../../services/category.service";
 
 const ViewFaq = () => {
   const queryClient = useQueryClient()
-  const { data} = useQuery("categories", categoryService.getAllFaq)
-  console.log(data);
+
+  const categoryQuery = useQuery("categories", categoryService.getAllCategories)
+  const faqQuery = useQuery("faqs", categoryService.getAllFaq)
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    if(categoryQuery.isSuccess) {
+       setCategories(categoryQuery.data)
+    }
+  }, [categoryQuery])
+  
 
   return (
     <section className=" min-h-screen moneypoint-blue-gradient py-12 ">
       <div className=" rounded-sm bg-blue-100  text-center py-14 px-20 max-w-5xl mx-auto">
         <h2 className=" text-2xl text-gray-800 font-medium">Frequently asked Questions</h2>
         <div className="mt-10">
-          <MCustomAccordion />
+          {categories.map((category : ICategory) => (
+            <MCustomAccordion 
+              category={category.title}
+              subCategories = {category.subCategories}
+              faqs = {faqQuery.data}
+            /> 
+          ))}
+          {/* */}
         </div>
         <Link to="/auth/register-ticket" className=" mt-5 inline-block mx-auto  px-4 py-3 bg-moneypoint-blue text-white text-sm rounded shadow ">
                 Create A Ticket

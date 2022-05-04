@@ -1,8 +1,8 @@
-import { iTicketData } from "../interfaces/ticket.interface"
+import { iTicket } from "../interfaces/ticket.interface"
 import { ticketStatusTypes } from "./constants"
 
 
-export const testTicketData : iTicketData[] = [
+export const testTicketData : iTicket[] = [
  {
     title : "test ticket",
     description : "I have a missing withdrawal and my password issue I have a missing withdrawal and my password issueI have a missing withdrawal and my password issue",

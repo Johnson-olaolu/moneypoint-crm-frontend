@@ -43,7 +43,7 @@ const MCustumFormGroupSelect: React.FC<IMCustumFormGroupSelect> = (props) => {
     <div className="text-left">
       <div className="form-custom-select  rounded relative border-blue-200 border ">
         <div className=" flex justify-between p-4  bg-white items-center cursor-pointer overflow-hidden rounded" onClick={toggleDropdown}>
-          <p className={value ? "text-sm text-gray-800" : " text-sm  text-gray-300"}>{value ? value : placeholder}</p>
+          <p className={value ? "text-sm text-gray-800 capitalize" : " text-sm  text-gray-300 capitalize"}>{value ? data.filter(d => d.value === value)[0].name : placeholder}</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-moneypoint-blue"

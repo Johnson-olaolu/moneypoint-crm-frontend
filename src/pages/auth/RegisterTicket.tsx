@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import MCustomFormGroupFileUpload from "../../components/forms/FormGroup/MCustomFormGroupFileUpload";
 import MCustomFromGroupInput from "../../components/forms/FormGroup/MCustomFormGroupInput";
 import MCustomFormGroupSubmit from "../../components/forms/FormGroup/MCustomFormGroupSubmit";
 import MCustomFormGroupTextArea from "../../components/forms/FormGroup/MCustomFormGroupTextArea";
 import MCustumFormGroupSelect from "../../components/forms/FormGroup/MCustumFormGroupSelect";
+import { ICategory } from "../../interfaces/category.interface";
+import { categoryService } from "../../services/category.service";
+import { ticketService } from "../../services/ticket.service";
 
 const customData = [
   { name: "category1", value: "category1" },
@@ -16,19 +19,49 @@ const customData = [
 
 const RegisterTicket = () => {
   const queryClient = useQueryClient()
+  const categoryQuery = useQuery("categories", categoryService.getAllCategories)
+
+  const [categories, setCategories] = useState <ICategory[]>([])
+
+  useEffect(() => {
+    if(categoryQuery.isSuccess) {
+       setCategories(categoryQuery.data)
+    }
+  }, [categoryQuery])
+
+  const createTicketMutation = useMutation( (newTicket : {
+    title: string;
+    description: string;
+    email: string;
+    categoryId: number;
+    subCategory: string;
+    agentEmail?: string;
+  }) => {
+    return ticketService.createNewTicket(newTicket)
+  })
 
   useEffect(() => {
     
   }, [])
   
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    createTicketMutation.mutate(formData)
+  }
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    description: string;
+    email: string;
+    categoryId: number;
+    subCategory: string;
+    agentEmail?: string;
+  }>({
     title: "",
     description: "",
-    category: "",
+    categoryId : 0,
     subCategory: "",
-    email: "",
-    agentEmail: "",
+    email: ""
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -48,12 +81,16 @@ const RegisterTicket = () => {
     });
   };
 
+  useEffect(()=> {
+    console.log(createTicketMutation.data);
+  }, [createTicketMutation])
+
   return (
     <section className=" min-h-screen moneypoint-blue-gradient py-12 ">
       {/* <div className="max-w-5xl mx-auto ">
         <img className=" h-20 mx-auto" src= {require("../../assets/icons/monie-point-logo.svg").default} alt="" />
       </div> */}
-      <form className=" rounded-sm bg-blue-100  text-center py-14 px-20 max-w-5xl mx-auto">
+      <form onSubmit={handleSubmit} className=" rounded-sm bg-blue-100  text-center py-14 px-20 max-w-5xl mx-auto">
         <h2 className=" text-2xl text-gray-800 font-medium">Create a Ticket</h2>
         <div className="mt-10 space-y-4">
           <MCustomFromGroupInput
@@ -74,19 +111,19 @@ const RegisterTicket = () => {
             value={formData.description}
           />
           <MCustumFormGroupSelect
-            name="category"
-            data={customData}
+            name="categoryId"
+            data={categories.map((category: ICategory) => ({name : category.title , value : category.id}))}
             onSelect={onSelect}
             placeholder="Select A Category"
-            value={formData.category}
+            value={formData.categoryId}
             isRequired={true}
           />
           <MCustumFormGroupSelect
             name="subCategory"
-            data={customData}
+            data={categories.filter((category : ICategory) => category.id === formData.categoryId)[0]?.subCategories.map((category: string ) => ({name : category, value : category}))}
             onSelect={onSelect}
             placeholder="Select A Sub-Category"
-            value={formData.category}
+            value={formData.subCategory}
             isRequired={true}
           />
           <MCustomFromGroupInput
@@ -103,7 +140,7 @@ const RegisterTicket = () => {
             isRequired={false}
             onChange={handleChange}
             placeholder="Enter Agent Email"
-            value={formData.agentEmail}
+            value={formData.agentEmail || ""}
             ref={inputRef}
             type="text"
           />

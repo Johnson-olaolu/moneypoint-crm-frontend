@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MCustumSelect from "../../components/forms/MCustomSelect";
 import TicketStatusTypes from "../../components/statusTypes/TicketStatusTypes";
-import { iTicketData } from "../../interfaces/ticket.interface";
+import { iTicket } from "../../interfaces/ticket.interface";
 import { ticketStatusTypes } from "../../utils/constants";
 import { testTicketData } from "../../utils/testTicketData";
 
@@ -11,9 +11,6 @@ const ViewSingleTicket = () => {
   const navigate = useNavigate();
   const ticket = testTicketData[0];
 
-  const handleTicketNavigate = (status: ticketStatusTypes, ticketRef: string) => {
-    navigate(`ongoing/${ticketRef}`);
-  };
 
   return (
     <section className=" py-12  moneypoint-blue-gradient">
