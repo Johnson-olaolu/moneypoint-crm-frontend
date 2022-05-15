@@ -1,17 +1,19 @@
 import React from "react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 interface IMCustomFromGroupInput {
   ref: React.Ref<HTMLInputElement>;
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   errorMsg?: string | null;
   isRequired: boolean;
   type: string;
 }
 const MCustomFromGroupInput: React.FC<IMCustomFromGroupInput> = React.forwardRef((props, ref) => {
-  const { placeholder, value, onChange, name, errorMsg, isRequired, type } = props;
+  const { placeholder, value, onChange, onBlur, name, errorMsg, isRequired, type } = props;
   return (
     <div className=" text-left">
       <input
@@ -21,12 +23,18 @@ const MCustomFromGroupInput: React.FC<IMCustomFromGroupInput> = React.forwardRef
         name={name}
         placeholder={placeholder}
         onChange={onChange}
-        type = {type}
-        ref = {ref}
+        onBlur={onBlur}
+        type={type}
+        ref={ref}
       />
-      <p className=" text-xs mt-1 px-4">
-        <span className=" text-gray-400  font-light"> {isRequired ? "(Required)" : "(Optional)"}</span>
-        {errorMsg && <span>{errorMsg}</span>}
+      <p className=" text-xs mt-1 ">
+        {/* <span className=" text-gray-400  font-light"> {isRequired ? "(Required)" : "(Optional)"}</span> */}
+        {errorMsg && (
+          <span className=" text-moneypoint-red flex gap-2 items-center">
+            {" "}
+            <HiOutlineExclamationCircle className="" /> {errorMsg}
+          </span>
+        )}
       </p>
     </div>
   );

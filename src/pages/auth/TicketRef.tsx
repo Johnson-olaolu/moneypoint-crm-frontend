@@ -21,11 +21,6 @@ const TicketRef = () => {
     return ticketService.getTicketByRef(ref);
   });
 
-  // const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   ticketRefMutation.mutate(formData.ticketRef);
-  // };
-
   const initialValues: ITicketRefForm = { ticketRef: "" };
 
   const formik = useFormik({
@@ -43,11 +38,6 @@ const TicketRef = () => {
         .catch((err: AxiosError) => {
           setFieldError("ticketRef", err.response?.data.message)
         });
-
-      //console.log(ticketRefMutation);
-      // setTimeout(() => {
-      //   history.push("/dashboard/deals");
-      // }, 250);
     },
   });
   const inputRef = useRef<HTMLInputElement>(null);

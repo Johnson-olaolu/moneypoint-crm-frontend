@@ -10,13 +10,13 @@ const createNewTicket = (payload: {
   categoryId: number;
   subCategory: string;
   agentEmail?: string;
-}) => {
+}) : Promise<iTicket> => {
     return axiosService.post("/ticket", payload)
         .then(res => {
             return res.data
         })
         .catch(err => {
-            return err
+            return Promise.reject(err)         
         })
 };
 
@@ -49,7 +49,7 @@ const closeTicket = ( ticketId : number) : Promise<iTicket> => {
       })
       .catch(err => {
         console.error(err)
-        Promise.reject()
+        return Promise.reject()
       })
 }
 
