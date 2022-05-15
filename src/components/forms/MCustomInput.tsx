@@ -1,21 +1,21 @@
 import React from "react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 interface IMCustomInput {
   label: string;
   ref: React.Ref<HTMLInputElement>;
   placeholder: string;
   value: string;
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   errorMsg?: string | null;
-  type : string
+  type: string;
 }
 
 const MCustomInput: React.FC<IMCustomInput> = React.forwardRef((props, ref) => {
-  const { label, errorMsg, value, name, placeholder, onChange , type} = props;
+  const { label, errorMsg, value, name, placeholder, onChange, onBlur, type } = props;
   return (
     <div className=" text-left mt-5">
-      {/* error message */}
-      {errorMsg && <span className="pb-2 text-moneypoint-red text-sm px-4">{errorMsg}</span>}
       <div className=" pt-2 pb-4 px-4 bg-white rounded">
         <label htmlFor="mcustumInput" className=" text-sm text-money-point-alt-blue mb-2">
           {label}
@@ -29,8 +29,16 @@ const MCustomInput: React.FC<IMCustomInput> = React.forwardRef((props, ref) => {
           value={value}
           placeholder={placeholder}
           onChange={onChange}
+          onBlur = {onBlur}
         />
       </div>
+      {/* error message */}
+      {errorMsg && (
+        <span className="pt-2 text-moneypoint-red text-sm flex gap-2 items-center">
+          {" "}
+          <HiOutlineExclamationCircle className="" /> {errorMsg}
+        </span>
+      )}
     </div>
   );
 });

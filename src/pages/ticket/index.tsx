@@ -7,8 +7,8 @@ const TicketRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/:ticketId" element ={<ViewSingleTicket/>} />
-        {/* <Route path="/*" element ={<Navigate to="/404"/>} /> */}
+        <Route path="/:ticketRef" element ={<ViewSingleTicket/>} />
+        <Route path="/*" element ={<Navigate to="/404"/>} />
       </Routes>
     </>
   );

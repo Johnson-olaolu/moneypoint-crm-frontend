@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import MCustomAccordion from "../../components/accordion/MCustomAccordion";
-import { ICategory } from "../../interfaces/category.interface";
+import { ICategory, IFaq } from "../../interfaces/category.interface";
 import { categoryService } from "../../services/category.service";
 
 const ViewFaq = () => {
@@ -11,13 +11,17 @@ const ViewFaq = () => {
   const categoryQuery = useQuery("categories", categoryService.getAllCategories)
   const faqQuery = useQuery("faqs", categoryService.getAllFaq)
 
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState <ICategory[]>([])
+  const [faqData, setFaqData] = useState<IFaq[]>([])
 
   useEffect(() => {
     if(categoryQuery.isSuccess) {
        setCategories(categoryQuery.data)
     }
-  }, [categoryQuery])
+    if(faqQuery.isSuccess) {
+      setFaqData(faqQuery.data)
+    }
+  }, [categoryQuery, faqQuery])
   
 
   return (
@@ -25,11 +29,11 @@ const ViewFaq = () => {
       <div className=" rounded-sm bg-blue-100  text-center py-14 px-20 max-w-5xl mx-auto">
         <h2 className=" text-2xl text-gray-800 font-medium">Frequently asked Questions</h2>
         <div className="mt-10">
-          {categories.map((category : ICategory) => (
+          {categories.map((category) => (
             <MCustomAccordion 
               category={category.title}
               subCategories = {category.subCategories}
-              faqs = {faqQuery.data}
+              faqs = {faqData}
             /> 
           ))}
           {/* */}

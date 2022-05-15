@@ -32,6 +32,7 @@ const AgentLogin = () => {
             label="Enter Username"
             ref={inputRef}
             type="text"
+            onBlur={() => {}}
           />
              <MCustomInput
             name="password"
@@ -42,6 +43,7 @@ const AgentLogin = () => {
             label="Enter Password"
             ref={inputRef}
             type="password"
+            onBlur={() => {}}
           />
           <div className=" mt-10"></div>
           <MCustomSubmit text="Login" />
